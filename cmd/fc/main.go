@@ -1,14 +1,13 @@
-package cmd
+package main
 
 import (
-	"flag"
+	"os"
+	"strconv"
 
 	"github.com/bububa/mcp-google-search/internal"
 )
 
 func main() {
-	var port int
-	flag.IntVar(&port, "port", 0, "sse server port")
-	flag.Parse()
+	port, _ := strconv.Atoi(os.Getenv("GOOGLE_SEARCH_PORT"))
 	internal.StartServer(port)
 }
