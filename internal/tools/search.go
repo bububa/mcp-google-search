@@ -8,6 +8,7 @@ import (
 
 	"github.com/mark3labs/mcp-go/mcp"
 
+	"github.com/bububa/mcp-google-search/entity"
 	"github.com/bububa/mcp-google-search/internal/google"
 )
 
@@ -34,6 +35,36 @@ func searchTool(ctx context.Context, req mcp.CallToolRequest, searchType string)
 	}, resp); err != nil {
 		return nil, err
 	}
-	bs, _ := json.Marshal(resp.Items)
+	list := make([]any, 0, len(resp.Items))
+	for _, v := range resp.Items {
+		if searchType == "image" {
+			var img entity.Image
+			convertImage(&img, &v)
+			list = append(list, img)
+		} else {
+			var page entity.Webpage
+			convertWebpage(&page, &v)
+			list = append(list, page)
+		}
+	}
+	bs, _ := json.Marshal(list)
 	return mcp.NewToolResultText(string(bs)), nil
+}
+
+func convertWebpage(dist *entity.Webpage, src *google.Item) {
+	dist.Title = src.Title
+	dist.Snippet = src.Snippet
+	dist.URL = src.Link
+}
+
+func convertImage(dist *entity.Image, src *google.Item) {
+	dist.Title = src.Title
+	dist.URL = src.Link
+	dist.Mime = src.Mime
+	if img := src.Image; img != nil {
+		dist.ContextLink = img.ContextLink
+		dist.Width = img.Width
+		dist.Height = img.Height
+		dist.ByteSize = img.ByteSize
+	}
 }
