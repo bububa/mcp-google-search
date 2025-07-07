@@ -36,3 +36,53 @@ mcp-google-search
 ```bash
 mcp-google-search -port=8080
 ```
+
+## Schema
+
+### Webpage Search
+
+- Function Name:
+  search
+- Input:
+
+```json
+{
+  "query": "search query"
+}
+```
+
+- Output:
+
+```json
+[{
+  title: 'webpage title'
+  snippet: 'webpage snippet'
+  url: 'webpage link'
+}]
+```
+
+### Image Search
+
+- Function Name:
+  image_search
+- Input:
+
+```json
+{
+  "query": "search query"
+}
+```
+
+- Output:
+
+```json
+[{
+  title: 'image title'
+  url: 'image link'
+  mime: 'image mimetype'
+  context_link: 'image context_link'
+  width: 'image width'
+  height: 'image height'
+  byte_size: 'image_bytesize'
+}]
+```
