@@ -37,6 +37,6 @@ jobs:
 
       - name: Test
         env:
-          GOOGLE_SEARCH_CS: ${{ secrets.GOOGLE_SEARCH_CS }}
+          GOOGLE_SEARCH_CX: ${{ secrets.GOOGLE_SEARCH_CX }}
           GOOGLE_SEARCH_KEY: ${{ secrets.GOOGLE_SEARCH_KEY }}
         run: go test -v ./...
