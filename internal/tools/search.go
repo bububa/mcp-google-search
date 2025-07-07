@@ -27,7 +27,7 @@ func searchTool(ctx context.Context, req mcp.CallToolRequest, searchType string)
 		return nil, errors.New("missing query parameter")
 	}
 	resp := new(google.Response)
-	clt := google.NewClient(os.Getenv("GOOGLE_SEARCH_CS"), os.Getenv("GOOGLE_SEARCH_KEY"))
+	clt := google.NewClient(os.Getenv("GOOGLE_SEARCH_CX"), os.Getenv("GOOGLE_SEARCH_KEY"))
 	if err := clt.Search(ctx, &google.Request{
 		Query:      query,
 		SearchType: searchType,

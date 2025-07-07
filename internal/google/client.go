@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 )
@@ -39,6 +40,7 @@ func (c *Client) Search(ctx context.Context, req *Request, resp *Response) error
 	buf.WriteString(GATEWAY)
 	buf.WriteByte('?')
 	buf.WriteString(values.Encode())
+	fmt.Println(buf.String())
 	httpReq, err := http.NewRequestWithContext(ctx, http.MethodGet, buf.String(), nil)
 	if err != nil {
 		return err
@@ -49,7 +51,8 @@ func (c *Client) Search(ctx context.Context, req *Request, resp *Response) error
 	}
 	defer httpResp.Body.Close()
 	if httpResp.StatusCode != http.StatusOK {
-		return fmt.Errorf("google search API returned an error: %s", httpResp.Status)
+		body, _ := io.ReadAll(httpResp.Body)
+		return fmt.Errorf("google search API returned an error: %s, \n%s", httpResp.Status, string(body))
 	}
 	buf.Reset()
 	if err := json.NewDecoder(&buf).Decode(resp); err != nil {
