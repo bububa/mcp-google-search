@@ -32,7 +32,7 @@ func (c *Client) Search(ctx context.Context, req *Request, resp *Response) error
 	values := make(url.Values)
 	values.Set("cx", c.cx)
 	values.Set("key", c.key)
-	values.Set("query", req.Query)
+	values.Set("q", req.Query)
 	if req.SearchType != "" {
 		values.Set("searchType", req.SearchType)
 	}
