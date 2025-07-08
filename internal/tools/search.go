@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"os"
+	"strconv"
 
 	"github.com/mark3labs/mcp-go/mcp"
 
@@ -27,12 +28,18 @@ func searchTool(ctx context.Context, req mcp.CallToolRequest, searchType string)
 	if query == "" {
 		return nil, errors.New("missing query parameter")
 	}
-	resp := new(google.Response)
-	clt := google.NewClient(os.Getenv("GOOGLE_SEARCH_CX"), os.Getenv("GOOGLE_SEARCH_KEY"))
-	if err := clt.Search(ctx, &google.Request{
+	searchReq := &google.Request{
 		Query:      query,
 		SearchType: searchType,
-	}, resp); err != nil {
+	}
+	if v, ok := mp["num"]; ok {
+		if str, ok := v.(string); ok {
+			searchReq.Num, _ = strconv.Atoi(str)
+		}
+	}
+	resp := new(google.Response)
+	clt := google.NewClient(os.Getenv("GOOGLE_SEARCH_CX"), os.Getenv("GOOGLE_SEARCH_KEY"))
+	if err := clt.Search(ctx, searchReq, resp); err != nil {
 		return nil, err
 	}
 	list := make([]any, 0, len(resp.Items))

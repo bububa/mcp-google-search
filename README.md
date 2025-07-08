@@ -47,18 +47,21 @@ mcp-google-search -port=8080
 
 ```json
 {
-  "query": "search query"
+  "query": "search query",
+  "num": "max number of search results"
 }
 ```
 
 - Output:
 
 ```json
-[{
-  title: 'webpage title'
-  snippet: 'webpage snippet'
-  url: 'webpage link'
-}]
+[
+  {
+    "title": "webpage title",
+    "snippet": "webpage snippet",
+    "url": "webpage link"
+  }
+]
 ```
 
 ### Image Search
@@ -69,20 +72,23 @@ mcp-google-search -port=8080
 
 ```json
 {
-  "query": "search query"
+  "query": "search query",
+  "num": "max number of search results"
 }
 ```
 
 - Output:
 
 ```json
-[{
-  title: 'image title'
-  url: 'image link'
-  mime: 'image mimetype'
-  context_link: 'image context_link'
-  width: 'image width'
-  height: 'image height'
-  byte_size: 'image_bytesize'
-}]
+[
+  {
+    "title": "image title",
+    "url": "image link",
+    "mime": "image mimetype",
+    "context_link": "image context_link",
+    "width": "image width",
+    "height": "image height",
+    "byte_size": "image_bytesize"
+  }
+]
 ```
