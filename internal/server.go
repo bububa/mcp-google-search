@@ -34,6 +34,11 @@ func StartServer(port int) {
 			mcp.Description("The search terms to query."),
 			mcp.Required(),
 		),
+		mcp.WithNumber("num",
+			mcp.Description("The max number of search results (1-10)."),
+			mcp.Min(1),
+			mcp.Max(10),
+		),
 	)
 
 	// Register imageSearch tools
@@ -42,6 +47,11 @@ func StartServer(port int) {
 		mcp.WithString("query",
 			mcp.Description("The search terms to query."),
 			mcp.Required(),
+		),
+		mcp.WithNumber("num",
+			mcp.Description("The max number of search results (1-10)."),
+			mcp.Min(1),
+			mcp.Max(10),
 		),
 	)
 

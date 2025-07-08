@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strconv"
 )
 
 type Client struct {
@@ -44,6 +45,12 @@ func (c *Client) Search(ctx context.Context, req *Request, resp *Response) error
 	values.Set("cx", c.cx)
 	values.Set("key", c.key)
 	values.Set("q", req.Query)
+	if req.Num > 0 {
+		if req.Num > 10 {
+			req.Num = 10
+		}
+		values.Set("num", strconv.Itoa(req.Num))
+	}
 	if req.SearchType != "" {
 		values.Set("searchType", req.SearchType)
 	}
